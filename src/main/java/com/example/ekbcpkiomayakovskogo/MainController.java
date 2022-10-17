@@ -3,6 +3,7 @@ package com.example.ekbcpkiomayakovskogo;
 
 import com.example.ekbcpkiomayakovskogo.Models.User;
 import com.example.ekbcpkiomayakovskogo.Utils.Config;
+import com.example.ekbcpkiomayakovskogo.Utils.SceneUtils;
 import com.example.ekbcpkiomayakovskogo.Utils.SessionUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -23,10 +24,18 @@ public class MainController {
     @FXML
     private ImageView avatar;
 
+    @FXML
+    private Button logOutBtn;
+
     public void setUser(User user) {
         avatar.setImage(new Image(Config.resourcesPath+"drawables/"+user.getFio().split(" ")[0]+".jpeg"));
         userInfo.setText(user.getFio()+"\nДолжность: "+user.getStatus());
         SessionUtils.startSession(sessionInfo);
+    }
+
+    @FXML
+    private void logOut() {
+        new SceneUtils().changeScene(exitBtn.getScene(), "login-view.fxml", null);
     }
 
     @FXML
@@ -44,5 +53,15 @@ public class MainController {
     @FXML
     private void unselectedExitBtn() {
         exitBtn.setStyle("-fx-background-color: #0000;");
+    }
+
+    @FXML
+    private void selectedLogOutBtn() {
+        logOutBtn.setStyle("-fx-background-color: #aaaa;");
+    }
+
+    @FXML
+    private void unselectedLogOutBtn() {
+        logOutBtn.setStyle("-fx-background-color: #0000;");
     }
 }

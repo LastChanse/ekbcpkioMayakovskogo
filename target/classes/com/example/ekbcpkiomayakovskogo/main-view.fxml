@@ -8,7 +8,6 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ekbcpkiomayakovskogo.MainController">
    <top>
       <AnchorPane prefHeight="30.0" BorderPane.alignment="CENTER">
-         <children>
             <ImageView fx:id="avatar" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
             <Label fx:id="sessionInfo" layoutX="65.0" layoutY="16.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="10.0">
                <font>
@@ -26,14 +25,16 @@
                </font>
             </Label>
             <Button fx:id="exitBtn" layoutX="437.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#exit" onMouseEntered="#selectedExitBtn" onMouseExited="#unselectedExitBtn" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #0000;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
+         <Button fx:id="logOutBtn" mnemonicParsing="false" onMouseClicked="#logOut" onMouseEntered="#selectedLogOutBtn" onMouseExited="#unselectedLogOutBtn" style="-fx-background-color: #0000;" text="Выход" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0">
+            <font>
+               <Font name="Arial Rounded MT Bold" size="15.0" />
+            </font>
+         </Button>
       </AnchorPane>
    </top>
    <left>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
       </AnchorPane>
    </left>
 </BorderPane>
