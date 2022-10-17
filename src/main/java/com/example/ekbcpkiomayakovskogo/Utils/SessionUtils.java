@@ -18,7 +18,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SessionUtils {
-    public static void startSession(User globalUser, Label userInfo) {finishSession(userInfo);
+    public static void startSession(User globalUser, Label userInfo) {
         int[] timeMin = {Config.timeSession}; //Чтобы внутри события был доступен, делаем в виде массива.
         int[] timeSec = {60};
         userInfo.setText("Добро пожаловать "+globalUser.getFio()+"!\n" +
@@ -26,7 +26,7 @@ public class SessionUtils {
         timeMin[0]--;
         Timeline timeline = new Timeline (
                 new KeyFrame(
-                        Duration.millis(1000 * 1), //1000 мс * 1 сек = 1 сек
+                        Duration.millis(1000), //1000 мс = 1 сек
                         ae -> {
                             --timeSec[0];
                             if (timeSec[0] < 10) {
