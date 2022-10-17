@@ -18,11 +18,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SessionUtils {
-    public static void startSession(User globalUser, Label userInfo) {
+    public static void startSession(Label sessionInfo) {
         int[] timeMin = {Config.timeSession}; //Чтобы внутри события был доступен, делаем в виде массива.
         int[] timeSec = {60};
-        userInfo.setText("Добро пожаловать "+globalUser.getFio()+"!\n" +
-                "Должность: "+globalUser.getStatus() + " Время сеанса: " + timeMin[0]+":00");
+        sessionInfo.setText("Время сеанса: " + timeMin[0]+":00");
         timeMin[0]--;
         Timeline timeline = new Timeline (
                 new KeyFrame(
@@ -30,11 +29,9 @@ public class SessionUtils {
                         ae -> {
                             --timeSec[0];
                             if (timeSec[0] < 10) {
-                                userInfo.setText("Добро пожаловать "+globalUser.getFio()+"!\n" +
-                                        "Должность: "+globalUser.getStatus() + " Время сеанса: " + timeMin[0]+":0"+timeSec[0]);
+                                sessionInfo.setText("Время сеанса: " + timeMin[0]+":0"+timeSec[0]);
                             } else {
-                                userInfo.setText("Добро пожаловать "+globalUser.getFio()+"!\n" +
-                                        "Должность: "+globalUser.getStatus() + " Время сеанса: " + timeMin[0]+":"+timeSec[0]);
+                                sessionInfo.setText("Время сеанса: " + timeMin[0]+":"+timeSec[0]);
                             }
                             if ((timeMin[0] == Config.timeWarningSession) && (timeSec[0] == 0)) {
                                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -46,7 +43,7 @@ public class SessionUtils {
                             }
 
                             if ((timeMin[0] <= 0) && (timeSec[0] <= 0)) {
-                                finishSession(userInfo);
+                                finishSession(sessionInfo);
                             }
                             if (timeSec[0] == 0) {
                                 if (timeMin[0] >= 0) {
@@ -63,7 +60,7 @@ public class SessionUtils {
         timeline.play(); //Запускаем
     }
 
-    private static void finishSession(Label userInfo) {
+    private static void finishSession(Label sessionInfo) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
         alert.setTitle("Сеанс окончен");
@@ -76,7 +73,7 @@ public class SessionUtils {
             public void run() {
                 Platform.runLater(() -> {
                     SceneUtils sceneUtils = new SceneUtils();
-                    sceneUtils.changeScene(userInfo.getScene(), "login-view.fxml", null);
+                    sceneUtils.changeScene(sessionInfo.getScene(), "login-view.fxml", null);
                 });
                 timer.cancel();
             }
