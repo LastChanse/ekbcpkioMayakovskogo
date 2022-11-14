@@ -1,19 +1,31 @@
 package com.example.ekbcpkiomayakovskogo;
 
+import com.example.ekbcpkiomayakovskogo.Models.User;
+import com.example.ekbcpkiomayakovskogo.Utils.AlertUtils;
 import com.example.ekbcpkiomayakovskogo.Utils.Config;
 import com.example.ekbcpkiomayakovskogo.Utils.DBUtils;
 import com.example.ekbcpkiomayakovskogo.Utils.SceneUtils;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.w3c.dom.events.Event;
+
+import java.io.IOException;
 
 public class LoginController {
     public boolean lock = false;
+    public int countTryLogin = 0;
+
+    @FXML
+    private HBox hbox;
 
     @FXML
     private ImageView logo;
@@ -38,6 +50,13 @@ public class LoginController {
 
     @FXML
     private Label errorText;
+
+    @FXML
+    private LoginController selfRoot;
+
+    public void getSelfController(LoginController selfRoot) {
+        this.selfRoot=selfRoot;
+    }
 
     @FXML
     public void initialize() {
@@ -74,7 +93,31 @@ public class LoginController {
 
     @FXML
     private void auth() {
-        DBUtils.logInUser(authBtn.getScene(), loginField.getText(), passwordField.getText());
+        User u;
+        if ((u = DBUtils.logInUser(authBtn.getScene(), loginField.getText(), passwordField.getText())) != null) {
+            SceneUtils sc = new SceneUtils();
+            sc.changeScene(authBtn.getScene(), "main-view.fxml", u);
+        } else {
+            countTryLogin++;
+            if (countTryLogin >= Config.countTryLogin) {
+                countTryLogin=0;
+                // Запросить капчу
+                        Parent root;
+                        try {
+                            FXMLLoader loader = new FXMLLoader(LoginController.class.getResource("captcha-view.fxml"));
+                            root = loader.load();
+                            CaptchaController cc = loader.getController();
+                            cc.getParentController(selfRoot);
+                            Stage stage = new Stage();
+                            stage.setTitle("Капча");
+                            stage.setScene(new Scene(root, 280, 140));
+                            stage.show();
+                        }
+                        catch (IOException e) {
+                            e.printStackTrace();
+                        }
+            }
+        }
     }
 
     @FXML
@@ -83,18 +126,23 @@ public class LoginController {
     }
 
     @FXML
-    public void lock(boolean on) {
+    public void lock(boolean on, int timeMin) {
         lock = on;
         if (on) {
             lockAll(true);
-            startTimer();
+            startTimer(timeMin);
         }
     }
 
-    private void startTimer() {
-        int[] timeMin = {Config.timeLockAuthAfterSession}; //Чтобы внутри события был доступен, делаем в виде массива.
-        int[] timeSec = {60};
-        timeMin[0]--;
+    private void startTimer(int timeMinute) {
+        double[] timeMin = {0}; //Чтобы внутри события был доступен, делаем в виде массива.
+        int[] timeSec = {timeMinute};
+        if (timeMinute >= 60) {
+            timeMin[0]=timeMinute/60;
+            timeMin[0]--;
+            timeSec[0] = timeMinute - ((int) timeMin[0]) * 60;
+        }
+
         Timeline timeline = new Timeline(
                 new KeyFrame(
                         Duration.millis(1000), //1000 мс = 1 сек
@@ -102,9 +150,9 @@ public class LoginController {
                             --timeSec[0];
 
                             if (timeSec[0] < 10) {
-                                errorText.setText("Время блокировки: " + timeMin[0] + ":0" + timeSec[0]);
+                                errorText.setText("Время блокировки: " + (int) timeMin[0] + ":0" + timeSec[0]);
                             } else {
-                                errorText.setText("Время блокировки: " + timeMin[0] + ":" + timeSec[0]);
+                                errorText.setText("Время блокировки: " + (int) timeMin[0] + ":" + timeSec[0]);
                             }
 
                             if ((timeMin[0] == 0) && (timeSec[0] == 0)) {
@@ -121,7 +169,7 @@ public class LoginController {
                 )
         );
 
-        timeline.setCycleCount(Config.timeLockAuthAfterSession * 60); // Ограничим число повторений
+        timeline.setCycleCount((int) timeMinute); // Ограничим число повторений
         timeline.play(); //Запускаем
     }
 
@@ -137,24 +185,24 @@ public class LoginController {
 
     @FXML
     private void activateLoginField() {
-            loginField.setStyle("-fx-background-color: #00000000; -fx-border-color: #e31623; -fx-border-width: 0px 0px 2px 0px;");
-            passwordField.setStyle("-fx-background-color: #00000000; -fx-border-color: #aaa; -fx-border-width: 0px 0px 2px 0px;");
-            passwordTextField.setStyle("-fx-background-color: #00000000; -fx-border-color: #aaa; -fx-border-width: 0px 0px 2px 0px;");
+        loginField.setStyle("-fx-background-color: #00000000; -fx-border-color: #e31623; -fx-border-width: 0px 0px 2px 0px;");
+        passwordField.setStyle("-fx-background-color: #00000000; -fx-border-color: #aaa; -fx-border-width: 0px 0px 2px 0px;");
+        passwordTextField.setStyle("-fx-background-color: #00000000; -fx-border-color: #aaa; -fx-border-width: 0px 0px 2px 0px;");
     }
 
 
     @FXML
     private void activatePasswordField() {
-            loginField.setStyle("-fx-background-color: #00000000; -fx-border-color: #aaa; -fx-border-width: 0px 0px 2px 0px;");
-            passwordField.setStyle("-fx-background-color: #00000000; -fx-border-color: #e31623; -fx-border-width: 0px 0px 2px 0px;");
-            passwordTextField.setStyle("-fx-background-color: #00000000; -fx-border-color: #e31623; -fx-border-width: 0px 0px 2px 0px;");
+        loginField.setStyle("-fx-background-color: #00000000; -fx-border-color: #aaa; -fx-border-width: 0px 0px 2px 0px;");
+        passwordField.setStyle("-fx-background-color: #00000000; -fx-border-color: #e31623; -fx-border-width: 0px 0px 2px 0px;");
+        passwordTextField.setStyle("-fx-background-color: #00000000; -fx-border-color: #e31623; -fx-border-width: 0px 0px 2px 0px;");
     }
 
     @FXML
     private void activatePasswordTextField() {
-            loginField.setStyle("-fx-background-color: #00000000; -fx-border-color: #aaa; -fx-border-width: 0px 0px 2px 0px;");
-            passwordField.setStyle("-fx-background-color: #00000000; -fx-border-color: #e31623; -fx-border-width: 0px 0px 2px 0px;");
-            passwordTextField.setStyle("-fx-background-color: #00000000; -fx-border-color: #e31623; -fx-border-width: 0px 0px 2px 0px;");
+        loginField.setStyle("-fx-background-color: #00000000; -fx-border-color: #aaa; -fx-border-width: 0px 0px 2px 0px;");
+        passwordField.setStyle("-fx-background-color: #00000000; -fx-border-color: #e31623; -fx-border-width: 0px 0px 2px 0px;");
+        passwordTextField.setStyle("-fx-background-color: #00000000; -fx-border-color: #e31623; -fx-border-width: 0px 0px 2px 0px;");
     }
 
     @FXML

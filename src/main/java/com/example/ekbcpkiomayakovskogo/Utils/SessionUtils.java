@@ -19,25 +19,33 @@ import java.util.TimerTask;
 
 public class SessionUtils {
     public static void startSession(Label sessionInfo) {
-        int[] timeMin = {Config.timeSession}; //Чтобы внутри события был доступен, делаем в виде массива.
-        int[] timeSec = {60};
-        sessionInfo.setText("Время сеанса: " + timeMin[0]+":00");
-        timeMin[0]--;
+        double[] timeMin = {0}; //Чтобы внутри события был доступен, делаем в виде массива.
+        int[] timeSec = {Config.timeSession};
+        if (Config.timeSession >= 60) {
+            timeMin[0]=Config.timeSession/60;
+            timeMin[0]--;
+            timeSec[0] = Config.timeSession - ((int) timeMin[0]) * 60;
+        }
+        sessionInfo.setText("Время сеанса: " + (int) (timeMin[0]+1)+":00");
         Timeline timeline = new Timeline (
                 new KeyFrame(
                         Duration.millis(1000), //1000 мс = 1 сек
                         ae -> {
                             --timeSec[0];
                             if (timeSec[0] < 10) {
-                                sessionInfo.setText("Время сеанса: " + timeMin[0]+":0"+timeSec[0]);
+                                sessionInfo.setText("Время сеанса: " + (int) timeMin[0]+":0"+timeSec[0]);
                             } else {
-                                sessionInfo.setText("Время сеанса: " + timeMin[0]+":"+timeSec[0]);
+                                sessionInfo.setText("Время сеанса: " + (int) timeMin[0]+":"+timeSec[0]);
                             }
-                            if ((timeMin[0] == Config.timeWarningSession) && (timeSec[0] == 0)) {
+                            if ((timeMin[0] == Config.timeWarningSession/60) && (timeSec[0] == Config.timeWarningSession - (Config.timeWarningSession/60)*60)) {
                                 Alert alert = new Alert(Alert.AlertType.WARNING);
 
                                 alert.setTitle("Внимание");
-                                alert.setHeaderText("Время сеанса истечёт через "+Config.timeWarningSession+" минут");
+                                if (timeSec[0] == 0) {
+                                    alert.setHeaderText("Время сеанса истечёт через "+((int) (Config.timeWarningSession/60))+" минут");
+                                } else {
+                                    alert.setHeaderText("Время сеанса истечёт через "+((int) (Config.timeWarningSession/60))+" минут в"+timeSec[0]+"секунд");
+                                }
 
                                 alert.show();
                             }
@@ -56,7 +64,7 @@ public class SessionUtils {
                 )
         );
 
-        timeline.setCycleCount(Config.timeSession * 60); // Ограничим число повторений
+        timeline.setCycleCount(Config.timeSession); // Ограничим число повторений
         timeline.play(); //Запускаем
     }
 
