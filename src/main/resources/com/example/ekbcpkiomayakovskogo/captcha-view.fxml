@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="CaptchaController" prefHeight="101.0" prefWidth="254.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ekbcpkiomayakovskogo.CaptchaController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="429.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Введите капчу">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font>
+            </Label>
+            <Canvas fx:id="canvas" height="64.0" layoutX="200.0" layoutY="200.0" width="256.0" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <TextField fx:id="textInputField" prefHeight="26.0" prefWidth="87.0" />
+               <Button mnemonicParsing="false" onMouseClicked="#check" text="Проверить">
+                  <HBox.margin>
+                     <Insets left="10.0" right="10.0" />
+                  </HBox.margin></Button>
+               <Button layoutX="104.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#reset" text="Обновить" />
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding></VBox>
+   </children>
+</AnchorPane>

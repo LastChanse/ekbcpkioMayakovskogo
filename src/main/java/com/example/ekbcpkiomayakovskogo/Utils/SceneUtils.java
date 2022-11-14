@@ -18,14 +18,14 @@ import java.net.URL;
 
 public class SceneUtils {
 
-    double xOffset = 0;
-    double yOffset = 0;
+    double xOffset = 101;
+    double yOffset = 101;
 
     public void deleteDefaultMenu(Stage stage, Scene scene) {
 
         stage.initStyle(StageStyle.DECORATED.UNDECORATED);
 
-        scene.setOnMousePressed(new EventHandler<MouseEvent>() {
+        scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 xOffset = mouseEvent.getSceneX();
@@ -36,9 +36,10 @@ public class SceneUtils {
         scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+            if (yOffset < Config.draggedYZone) {
                 stage.setX(mouseEvent.getScreenX() - xOffset);
                 stage.setY(mouseEvent.getScreenY() - yOffset);
-            }
+            }}
         });
     }
 
@@ -59,7 +60,7 @@ public class SceneUtils {
                 FXMLLoader loader = new FXMLLoader(new URL(Config.resourcesPath+fxmlFile));
                 root = loader.load();
                 LoginController lc = loader.getController();
-                lc.lock(true);
+                lc.lock(true, Config.timeLockAuthAfterSession);
             } catch (IOException e) {
                 e.printStackTrace();
             }

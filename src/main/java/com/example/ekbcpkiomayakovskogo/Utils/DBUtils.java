@@ -1,5 +1,6 @@
 package com.example.ekbcpkiomayakovskogo.Utils;
 
+import com.example.ekbcpkiomayakovskogo.LoginController;
 import com.example.ekbcpkiomayakovskogo.Models.User;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -10,7 +11,7 @@ import java.sql.*;
 
 public class DBUtils {
 
-    public static void logInUser(Scene scene, String login, String password) {
+    public static User logInUser(Scene scene, String login, String password) {
         User user = new User();
         String statusId = new String();
         Connection connection = null;
@@ -46,8 +47,7 @@ public class DBUtils {
                             AlertUtils.showAlert("Не удалось получить данные о должности из базы данных", Alert.AlertType.ERROR);
                             throw new RuntimeException(e);
                         }
-                        SceneUtils sc = new SceneUtils();
-                        sc.changeScene(scene, "main-view.fxml", user);
+                        return user;
                     } else {
                         AlertUtils.showAlert("Предоставленные учетные данные неверны", Alert.AlertType.ERROR);
                     }
@@ -80,6 +80,7 @@ public class DBUtils {
             }
         }
 
+        return null;
     }
 
 }
