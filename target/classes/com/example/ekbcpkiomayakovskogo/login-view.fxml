@@ -7,86 +7,64 @@
 
 <!--fx:controller="com.example.ekbcpkiomayakovskogo.LoginController"-->
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-      prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.ekbcpkiomayakovskogo.LoginController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ekbcpkiomayakovskogo.LoginController">
    <AnchorPane prefHeight="600.0" prefWidth="300.0" style="-fx-background-color: #e31623;">
-         <ImageView fx:id="logo" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true"
-                    AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="80.0"/>
-         <Label layoutX="42.0" layoutY="404.0" text="Панель управления" textFill="WHITE"
-                AnchorPane.topAnchor="430.0">
+         <ImageView fx:id="logo" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="80.0">
+         <image>
+            <Image url="@drawables/logo.png" />
+         </image></ImageView>
+         <Label layoutX="42.0" layoutY="404.0" text="Панель управления" textFill="WHITE" AnchorPane.topAnchor="430.0">
             <font>
-               <Font name="Arial Rounded MT Bold" size="24.0"/>
+               <Font name="Arial Rounded MT Bold" size="24.0" />
             </font>
          </Label>
    </AnchorPane>
    <AnchorPane prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #fff;">
-         <Label layoutX="188.0" layoutY="33.0" text="ВХОД" textFill="#00000099"
-                AnchorPane.topAnchor="50.0">
+         <Label layoutX="188.0" layoutY="33.0" text="ВХОД" textFill="#00000099" AnchorPane.topAnchor="50.0">
             <font>
-               <Font name="Arial Rounded MT Bold" size="48.0"/>
+               <Font name="Arial Rounded MT Bold" size="48.0" />
             </font>
          </Label>
-         <Label layoutX="71.0" layoutY="150.0" prefHeight="45.0" text="Логин" textFill="#00000099"
-                AnchorPane.leftAnchor="71.0" AnchorPane.topAnchor="150.0">
+         <Label layoutX="71.0" layoutY="150.0" prefHeight="45.0" text="Логин" textFill="#00000099" AnchorPane.leftAnchor="71.0" AnchorPane.topAnchor="150.0">
             <font>
-               <Font name="Arial Rounded MT Bold" size="36.0"/>
+               <Font name="Arial Rounded MT Bold" size="36.0" />
             </font>
          </Label>
-         <Label layoutX="14.0" layoutY="256.0" prefHeight="45.0" text="Пароль" textFill="#00000099"
-                AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="250.0">
+         <Label layoutX="14.0" layoutY="256.0" prefHeight="45.0" text="Пароль" textFill="#00000099" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="250.0">
             <font>
-               <Font name="Arial Rounded MT Bold" size="36.0"/>
+               <Font name="Arial Rounded MT Bold" size="36.0" />
             </font>
          </Label>
-         <PasswordField fx:id="passwordField" layoutX="180.0" layoutY="256.0" onKeyTyped="#onTypedPas"
-                        onMouseClicked="#activatePasswordField" prefHeight="45.0" prefWidth="262.0" promptText="userpas"
-                        style="-fx-background-color: #00000000; -fx-border-color: #aaa; -fx-border-width: 0px 0px 2px 0px;"
-                        AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="250.0">
+         <PasswordField fx:id="passwordField" layoutX="180.0" layoutY="256.0" onKeyTyped="#onTypedPas" onMouseClicked="#activatePasswordField" prefHeight="45.0" prefWidth="262.0" promptText="userpas" style="-fx-background-color: #00000000; -fx-border-color: #aaa; -fx-border-width: 0px 0px 2px 0px;" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="250.0">
             <font>
-               <Font name="Arial Rounded MT Bold" size="20.0"/>
+               <Font name="Arial Rounded MT Bold" size="20.0" />
             </font>
          </PasswordField>
-         <TextField fx:id="loginField" layoutX="180.0" layoutY="150.0" onMouseClicked="#activateLoginField"
-                    prefHeight="45.0" prefWidth="262.0" promptText="user.name@mail.ru"
-                    style="-fx-background-color: #00000000; -fx-border-color: #aaa; -fx-border-width: 0px 0px 2px 0px;"
-                    AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="150.0">
+         <TextField fx:id="loginField" layoutX="180.0" layoutY="150.0" onMouseClicked="#activateLoginField" prefHeight="45.0" prefWidth="262.0" promptText="user.name@mail.ru" style="-fx-background-color: #00000000; -fx-border-color: #aaa; -fx-border-width: 0px 0px 2px 0px;" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="150.0">
             <font>
-               <Font name="Arial Rounded MT Bold" size="20.0"/>
+               <Font name="Arial Rounded MT Bold" size="20.0" />
             </font>
          </TextField>
-         <TextField fx:id="passwordTextField" layoutX="180.0" layoutY="206.0" onKeyTyped="#onTypedTextPas"
-                    onMouseClicked="#activatePasswordTextField" prefHeight="45.0" prefWidth="262.0" promptText="userpas"
-                    style="-fx-background-color: #00000000; -fx-border-color: #aaa; -fx-border-width: 0px 0px 2px 0px;"
-                    visible="false" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="50.0"
-                    AnchorPane.topAnchor="250.0">
+         <TextField fx:id="passwordTextField" layoutX="180.0" layoutY="206.0" onKeyTyped="#onTypedTextPas" onMouseClicked="#activatePasswordTextField" prefHeight="45.0" prefWidth="262.0" promptText="userpas" style="-fx-background-color: #00000000; -fx-border-color: #aaa; -fx-border-width: 0px 0px 2px 0px;" visible="false" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="250.0">
             <font>
-               <Font name="Arial Rounded MT Bold" size="20.0"/>
+               <Font name="Arial Rounded MT Bold" size="20.0" />
             </font>
          </TextField>
-         <ToggleButton fx:id="toggleBtn" layoutX="410.0" layoutY="253.0" mnemonicParsing="false"
-                       onAction="#toggleButtonShowOtHide" onMouseEntered="#selectedToggleBtn"
-                       onMouseExited="#unselectedToggleBtn" prefHeight="40.0" prefWidth="40.0"
-                       style="-fx-background-color: #0000;" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="253.0"/>
+         <ToggleButton fx:id="toggleBtn" layoutX="410.0" layoutY="253.0" mnemonicParsing="false" onAction="#toggleButtonShowOtHide" onMouseEntered="#selectedToggleBtn" onMouseExited="#unselectedToggleBtn" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #0000;" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="253.0" />
          <Label text="X" textFill="#e31623" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="3.0">
             <font>
-               <Font name="Arial Rounded MT Bold" size="36.0"/>
+               <Font name="Arial Rounded MT Bold" size="36.0" />
             </font>
          </Label>
-         <Button fx:id="authBtn" layoutX="110.0" layoutY="374.0" mnemonicParsing="false" onMouseClicked="#auth"
-                 onMouseEntered="#selectedAuth" onMouseExited="#unselectedAuth" prefHeight="100.0" prefWidth="300.0"
-                 style="-fx-background-color: #e31623;" text="ВОЙТИ" textFill="WHITE" AnchorPane.leftAnchor="110.0"
-                 AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="400.0">
+         <Button fx:id="authBtn" layoutX="110.0" layoutY="374.0" mnemonicParsing="false" onMouseClicked="#auth" onMouseEntered="#selectedAuth" onMouseExited="#unselectedAuth" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #e31623;" text="ВОЙТИ" textFill="WHITE" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="400.0">
             <font>
-               <Font name="Arial Rounded MT Bold" size="30.0"/>
+               <Font name="Arial Rounded MT Bold" size="30.0" />
             </font>
          </Button>
-         <Button fx:id="exitBtn" layoutX="437.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#exit"
-                 onMouseEntered="#selectedExitBtn" onMouseExited="#unselectedExitBtn" prefHeight="50.0" prefWidth="50.0"
-                 style="-fx-background-color: #0000;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+         <Button fx:id="exitBtn" layoutX="437.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#exit" onMouseEntered="#selectedExitBtn" onMouseExited="#unselectedExitBtn" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #0000;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          <Label fx:id="errorText" layoutX="180.0" layoutY="307.0" textFill="RED">
             <font>
-               <Font name="Arial Rounded MT Bold" size="20.0"/>
+               <Font name="Arial Rounded MT Bold" size="20.0" />
             </font>
          </Label>
    </AnchorPane>

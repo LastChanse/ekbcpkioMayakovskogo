@@ -25,22 +25,16 @@ public class SceneUtils {
 
         stage.initStyle(StageStyle.DECORATED.UNDECORATED);
 
-        scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                xOffset = mouseEvent.getSceneX();
-                yOffset = mouseEvent.getSceneY();
-            }
+        scene.setOnMouseMoved(mouseEvent -> {
+            xOffset = mouseEvent.getSceneX();
+            yOffset = mouseEvent.getSceneY();
         });
 
-        scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-            if (yOffset < Config.draggedYZone) {
-                stage.setX(mouseEvent.getScreenX() - xOffset);
-                stage.setY(mouseEvent.getScreenY() - yOffset);
-            }}
-        });
+        scene.setOnMouseDragged(mouseEvent -> {
+        if (yOffset < Config.draggedYZone) {
+            stage.setX(mouseEvent.getScreenX() - xOffset);
+            stage.setY(mouseEvent.getScreenY() - yOffset);
+        }});
     }
 
     public void changeScene(Scene scene, String fxmlFile, User user) {
@@ -65,23 +59,16 @@ public class SceneUtils {
                 e.printStackTrace();
             }
         }
-        // FIXME: 16.10.2022 Bug Cannot invoke "javafx.stage.Stage.setMaxHeight(double)" because "stage" is null
         Stage stage = (Stage) scene.getWindow();
         scene = new Scene(root, 800, 600);
-        scene.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                xOffset = mouseEvent.getSceneX();
-                yOffset = mouseEvent.getSceneY();
-            }
+        scene.setOnMousePressed(mouseEvent -> {
+            xOffset = mouseEvent.getSceneX();
+            yOffset = mouseEvent.getSceneY();
         });
 
-        scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                stage.setX(mouseEvent.getScreenX() - xOffset);
-                stage.setY(mouseEvent.getScreenY() - yOffset);
-            }
+        scene.setOnMouseDragged(mouseEvent -> {
+            stage.setX(mouseEvent.getScreenX() - xOffset);
+            stage.setY(mouseEvent.getScreenY() - yOffset);
         });
         stage.setMaxHeight(600);
         stage.setMaxWidth(800);

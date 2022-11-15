@@ -1,7 +1,6 @@
 package com.example.ekbcpkiomayakovskogo;
 
 import com.example.ekbcpkiomayakovskogo.Models.User;
-import com.example.ekbcpkiomayakovskogo.Utils.AlertUtils;
 import com.example.ekbcpkiomayakovskogo.Utils.Config;
 import com.example.ekbcpkiomayakovskogo.Utils.DBUtils;
 import com.example.ekbcpkiomayakovskogo.Utils.SceneUtils;
@@ -16,9 +15,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class LoginController {
     public boolean lock = false;
@@ -104,13 +105,28 @@ public class LoginController {
                 // Запросить капчу
                         Parent root;
                         try {
+                            AtomicReference<Double> xOffset = new AtomicReference<>((double) 101);
+                            AtomicReference<Double> yOffset = new AtomicReference<>((double) 101);
                             FXMLLoader loader = new FXMLLoader(LoginController.class.getResource("captcha-view.fxml"));
                             root = loader.load();
                             CaptchaController cc = loader.getController();
                             cc.getParentController(selfRoot);
+
                             Stage stage = new Stage();
-                            stage.setTitle("Капча");
-                            stage.setScene(new Scene(root, 280, 140));
+
+                            stage.initStyle(StageStyle.DECORATED.UNDECORATED);
+
+                            root.setOnMouseMoved(mouseEvent -> {
+                                xOffset.set(mouseEvent.getSceneX());
+                                yOffset.set(mouseEvent.getSceneY());
+                            });
+
+                            root.setOnMouseDragged(mouseEvent -> {
+                                if (yOffset.get() < Config.draggedYZone) {
+                                    stage.setX(mouseEvent.getScreenX() - xOffset.get());
+                                    stage.setY(mouseEvent.getScreenY() - yOffset.get());
+                                }});stage.setTitle("Капча");
+                            stage.setScene(new Scene(root));
                             stage.show();
                         }
                         catch (IOException e) {
